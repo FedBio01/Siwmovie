@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>
+		New Movie
+	</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+	<link rel="stylesheet" href="../lib/w3.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></head>
+
+<body>
+	<header>
+		<div th:if="${#request.userPrincipal}">
+			<span th:text="${#request.userPrincipal.principal.username}"></span>
+			<i class="material-icons">person</i>
+			<a style="color:black" href="/logout">Logout</a>
+		</div>
+		<div th:unless="${#request.userPrincipal}">
+			<a style="color:black" href="/login">Login</a>
+		</div>
+		<div><a style="color:black" href="/"><i class="material-icons">home</i></a></div>
+	</header>
+
+	
+	<div class= "login-box" th:if="${movie}" style= "height: 80%; overflow-y: scroll;">
+		<h1 style="color:wheat;" th:text="'Aggiorna film'+ ' *'+ ${movie.title} + '*'"> </h1>
+		
+		<h2 style="color:gold;">Modifica i dati del film</h2> 
+		<form th:action="@{'/admin/updateMovie/' + ${movie.id}}" method="POST" th:object="${artist}">
+			<div class="user-box">
+				<input type="text" th:field="${movie.title}"/></span>
+				<label>Titolo: </label>
+			</div>
+			<div class="user-box">
+				<input type="number" th:field="${movie.year}"/>
+				<label>Anno di uscita:</label>
+			</div>
+			
+			<div>
+			<a>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <button type="submit">Conferma</button>
+    </a>
+			</div>
+		</form>
+		
+		<h2 style="color:gold;">Aggiungi immagini al film</h2>
+        <div>
+			<form th:action="@{'/admin/addImage/' + ${movie.id}}" method="POST" th:object="${movie}" enctype="multipart/form-data">
+				<h3 style="color:lightgrey">Immagini caricate:</h3>
+				<ul>
+					<li th:each="photo: ${movie.photos}">
+						<span><img width="10%" th:src= "@{${movie.photosImagePath} + ${photo}}" /> </span> 
+					</li>
+				</ul>
+					<div class="user-box">
+					<input type="file" name="image" accept="image/*" required/>
+					<div>
+			<a>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <button type="submit">Conferma</button>
+    </a>
+			</div>
+					</div>
+			</form>
+		</div>
+		
+		
+		<h2 style="color:gold;" >Modifica attori e registi</h2>
+		<div th:if="${movie.director}">
+			<ul>
+			<h3>
+			<span>Regista: </span><span style="color:wheat;" th:text="${movie.director.name} + ' ' + ${movie.director.surname}">Steven
+				Spielberg</span>
+			</h3>	
+			<a th:href="@{'/admin/addDirector/' + ${movie.id}}"><button type="button">Modifica regista</button></a></span>
+		</div>
+		<div th:unless="${movie.director}">
+			<a th:href="@{'/admin/addDirector/' + ${movie.id}}">Aggiungi regista</a>
+		</div>
+		</ul>
+		
+		<ul>
+			<h3>Attori: </h3>
+			<li th:each="actor: ${movie.actors}">
+				<span style="font-size:90%" th:text="${actor.name} + ' ' + ${actor.surname}">Al Pacino</span>
+			</li>
+			<a th:href="@{'/admin/updateActors/' + ${movie.id}}">
+				<button type="button">Modifica attori</button>
+			</a>
+		</ul>
+		<div th:unless="${movie}">Film non esistente</div>
+		
+		<form th:action="@{'/admin/manageMovies/'}">
+		<div>
+			<a>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <button type="submit">Fine</button>
+    </a>
+			</div>
+			</form>
+	
+	</div>
+        
+</body>
+
+</html>

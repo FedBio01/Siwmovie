@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Scelta attori</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+    <link rel="stylesheet" href="../lib/w3.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></head>
+
+<body>
+	<header>
+		<div th:if="${#request.userPrincipal}">
+			<span th:text="${#request.userPrincipal.principal.username}"></span>
+			<i class="material-icons">person</i>
+			<a style="color:black" href="/logout">Logout</a>
+		</div>
+		<div th:unless="${#request.userPrincipal}">
+			<a style="color:black" href="/login">Login</a>
+		</div>
+		<div><a style="color:black" href="/"><i class="material-icons">home</i></a></div>
+	</header>
+	
+	<div class="login-box"  style= "height: 80%; overflow-y: scroll;">
+	<h1 th:text="'Attori del film ' + ${movie.title}"></h1>
+	<div th:if="${movie.actors.isEmpty()}"><h3>Non ci sono attori per questo film</h3></div>
+	<ul>
+		<li th:each="actor : ${movie.actors}">
+			<span th:text="${actor.name}+' '+${actor.surname}"></span>
+			<a th:href="@{'/admin/removeActorFromMovie/'+ ${actor.id}+'/'+${movie.id}}">Cancella</a>
+		</li>
+	</ul>
+	<div>
+		<h3>Attori che si possono aggiungere:</h3>
+		<ul>
+			<li th:each="actor : ${actorsToAdd}">
+				<span th:text="${actor.name}+' '+${actor.surname}"></span>
+				<div><a th:href="@{'/admin/addActorToMovie/'+ ${actor.id}+'/'+${movie.id}}">Aggiungi</a></div>
+				
+			</li>
+		</ul>
+	<div>
+	<div>
+		<a th:href="@{'/admin/formUpdateMovie/'+ ${movie.id}}"><button type="button">Fine</button></a>
+	</div>
+	</div>
+</body>
+
+</html>

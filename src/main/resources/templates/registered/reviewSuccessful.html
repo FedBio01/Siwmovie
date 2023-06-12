@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>SiwMovie - Registrazione conclusa</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+<link rel="stylesheet" href="../lib/w3.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></head>
+
+<body>
+	<header>
+		<div th:if="${#request.userPrincipal}">
+			<span th:text="${#request.userPrincipal.principal.username}"></span>
+			<i class="material-icons">person</i>
+			<a style="color:black" href="/logout">Logout</a>
+		</div>
+		<div th:unless="${#request.userPrincipal}">
+			<a style="color:black" href="/login">Login</a>
+		</div>
+		<div><a style="color:black" href="/"><i class="material-icons">home</i></a></div>
+	</header>
+
+	<div class="login-box" style= "height: 80%; overflow-y: scroll;">
+	
+	<h1 th:text="'Hai inserito una nuova recensione per il film ' + ${movie.title}"></h1>
+	<div>
+		<h2 style="color:gold">Titolo: </h3>
+		<h3 th:text="${review.title}"></h3>
+	</div>
+	<div>
+		<h2 style="color:gold">Valutazione: </h2>
+		<h3 th:text="${review.rating}"></span>
+	</div>
+	<div>
+		<h2 style="color:gold">Commento: </h2>
+		<h3 th:text="${review.text}"></h3>
+	</div>
+	<button>
+		<a th:href="@{'/registered/movieRegistered'}">Torna all'elenco di film</a>
+	</button>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Artista</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+<link rel="stylesheet" href="../lib/w3.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></head>
+
+<body>
+	<header>
+		<div th:if="${#request.userPrincipal}">
+			<span th:text="${#request.userPrincipal.principal.username}"></span>
+			<i class="material-icons">person</i>
+			<a style="color:black" href="/logout">Logout</a>
+		</div>
+		<div th:unless="${#request.userPrincipal}">
+			<a style="color:black" href="/login">Login</a>
+		</div>
+		<div><a style="color:black" href="/"><i class="material-icons">home</i></a></div>
+	</header>
+
+	<div class="login-box">
+    <h2>Dettagli Artista</h2>
+    <div class="user-box">
+    <div th:if="${artist}">
+        <span th:text="${artist.name} + ' ' + ${artist.surname}">Dino Risi</span>
+        <span th:text="'(' + ${artist.dateOfBirth} + ')'">20/20/2000</span>
+        <span th:if="${artist.dateOfDeath}" th:text="'- (' + ${artist.dateOfDeath} + ')'">20/20/2000</span>
+    </div>
+        <div><img style="margin:2%; left:50%; border-radius: 5%;" width="40%" th:src="@{${artist.photosImagePath}}" /></div>
+    </div>
+    <div th:unless="${artist}">Non esiste</div>
+    </div>
+  </body>
+</html>

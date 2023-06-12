@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>
+			SiwMovie - Gestione Artisti
+		</title>
+		<link rel="stylesheet" href="/css/stile.css" />
+			<link rel="stylesheet" href="../lib/w3.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></head>
+
+<body>
+	<header>
+		<div th:if="${#request.userPrincipal}">
+			<span th:text="${#request.userPrincipal.principal.username}"></span>
+			<i class="material-icons">person</i>
+			<a style="color:black" href="/logout">Logout</a>
+		</div>
+		<div th:unless="${#request.userPrincipal}">
+			<a style="color:black" href="/login">Login</a>
+		</div>
+		<div><a style="color:black" href="/"><i class="material-icons">home</i></a></div>
+	</header>
+		
+		<div class="login-box">
+		<h1>Gestione Artisti</h1>
+		<div>
+			<a href="/admin/formNewArtist"><h2 style="color:wheat; text-align:start">Inserisci i dati di un artista</h2></a>
+		</div>
+		<div>
+			<a href="/admin/manageArtist"><h2 style="color:wheat; text-align:start">Gestisci gli artisti</h2></a>
+		</div>
+		<div>
+			<a href="/artist"><h2 style="color:wheat; text-align:start">Elenco artisti</h2></a>
+		</div>
+	</body>
+</html>

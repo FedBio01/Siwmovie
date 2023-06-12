@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>
+		New Artist
+	</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+<link rel="stylesheet" href="../lib/w3.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></head>
+
+<body>
+	<header>
+		<div th:if="${#request.userPrincipal}">
+			<span th:text="${#request.userPrincipal.principal.username}"></span>
+			<i class="material-icons">person</i>
+			<a style="color:black" href="/logout">Logout</a>
+		</div>
+		<div th:unless="${#request.userPrincipal}">
+			<a style="color:black" href="/login">Login</a>
+		</div>
+		<div><a style="color:black" href="/"><i class="material-icons">home</i></a></div>
+	</header>
+
+	<div class="login-box">
+	<h1>Aggiungi un artista</h1>
+	<form th:action="@{/admin/artist}" method="POST" th:object="${artist}" enctype="multipart/form-data" style= "height: 80%; overflow-y: scroll;">
+		<div class="user-box">
+			<span th:text="${messaggioErrore}">Errore</span>
+		</div>
+		
+		<div class="user-box">
+		<input type="text" th:field="${artist.name}" required/>
+			<label>Nome:</label> 
+		</div>
+
+		<div class="user-box">
+			 <input type="text" th:field="${artist.surname}" required/>
+			 <label>Cognome:</label>
+		</div>
+
+		<div class="user-box">
+			<input type="date" th:field="${artist.dateOfBirth}"/>
+			<label>Data di nascita:</label> 
+		</div>
+		
+		<div class="user-box">
+			<input type="date" th:field="${artist.dateOfDeath}"/>
+			<label>Data di morte (eventuale):</label> 
+		</div>
+		
+		<div class="user-box">
+     		<input type="file" name="image" accept="image/*" required> 
+     		<label style="top: -20px; left: 0; color: #03e9f4; font-size: 12px;">Carica immagine:</label>
+         </div>
+         
+		<div>
+			<a>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <button type="submit">Conferma</button>
+    </a>
+	</form>
+	</div>
+</body>
+
+</html>

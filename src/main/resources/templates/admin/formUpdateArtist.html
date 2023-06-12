@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>
+		Update Artist
+	</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+	<link rel="stylesheet" href="../lib/w3.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></head>
+
+<body>
+	<header>
+		<div th:if="${#request.userPrincipal}">
+			<span th:text="${#request.userPrincipal.principal.username}"></span>
+			<i class="material-icons">person</i>
+			<a style="color:black" href="/logout">Logout</a>
+		</div>
+		<div th:unless="${#request.userPrincipal}">
+			<a style="color:black" href="/login">Login</a>
+		</div>
+		<div><a style="color:black" href="/"><i class="material-icons">home</i></a></div>
+	</header>
+
+	<div class= "login-box" style= "height: 80%; overflow-y: scroll;">
+	<h1>Aggiorna artista</h1>
+	<div>
+		<form th:action="@{'/admin/updateArtist/' + ${artist.id}}" method="POST" th:object="${artist}" enctype="multipart/form-data">
+			<div class="user-box">
+			<input type="text" th:field="${artist.name}"/>
+			<label>Nome: </label>
+			</div>
+			
+			<div class="user-box">
+			<input type="text" th:field="${artist.surname}"/>
+			<label>Cognome: </label>
+			</div>
+			
+			
+			<div class="user-box">
+				<input type="date" th:field="${artist.dateOfBirth}"/></span>
+				<label>Data di nascita: </label>
+			</div>
+			
+			<div class="user-box" if="${artist.dateOfDeath}">
+			<input type="date" th:field="${artist.dateOfDeath}"/>
+			<label>Data di morte: </label>
+			</div>
+			
+         	<div>
+			<a>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <button type="submit">Conferma</button>
+    </a>
+		</div>
+		</form>
+        
+</body>
+
+</html>

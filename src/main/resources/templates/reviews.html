@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Film</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+<link rel="stylesheet" href="../lib/w3.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></head>
+
+<body>
+	<header>
+		<div th:if="${#request.userPrincipal}">
+			<span th:text="${#request.userPrincipal.principal.username}"></span>
+			<i class="material-icons">person</i>
+			<a style="color:black" href="/logout">Logout</a>
+		</div>
+		<div th:unless="${#request.userPrincipal}">
+			<a style="color:black" href="/login">Login</a>
+		</div>
+		<div><a style="color:black" href="/"><i class="material-icons">home</i></a></div>
+	</header>
+
+	<div class="login-box">
+	<h2 th:text="'Recensioni del film ' + '*'+ ${movie.title}+'*'"></h2>
+	<div th:if="${reviews==null || reviews.isEmpty()}"><h2>Non ci sono recensioni per questo film</h2></div>
+	
+	<button th:if="${reviews!=null && !reviews.isEmpty()}">
+		<a th:href="@{'/reviews/reviewsOrdered' + '/' + ${movie.id}}" 
+		th:text="'Visualizza recensioni ordinate per valutazione'"></a>
+	</button>
+	
+	<ul style= "height: 80%; overflow-y: scroll;">
+		<li class="box" th:each="review : ${reviews}">
+			
+			<span>Utente:</span>
+			<span style="font-weight: bold;" th:text="${review.user.name} + ', '"></span>
+			<span>valutazione (1-5):</span>
+			<span th:text="${review.rating}"></span>
+			
+			<div class="reviewTitle">
+			<span style="color:white" th:text="${review.title}"></span>
+			</div>
+			
+			<div class="reviewText">
+			<span style="color:white" th:text="${review.text}"></span>
+			</div>
+			
+      <button>
+				<a th:href="@{'/admin/deleteReview' + '/' + ${review.id} + '/' + ${movie.id}}">Elimina</a>
+			</button>
+			
+			
+		</li>
+	</ul>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Film</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+<link rel="stylesheet" href="../lib/w3.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></head>
+
+<body>
+	<header>
+		<div th:if="${#request.userPrincipal}">
+			<span th:text="${#request.userPrincipal.principal.username}"></span>
+			<i class="material-icons">person</i>
+			<a style="color:black" href="/logout">Logout</a>
+		</div>
+		<div th:unless="${#request.userPrincipal}">
+			<a style="color:black" href="/login">Login</a>
+		</div>
+		<div><a style="color:black" href="/"><i class="material-icons">home</i></a></div>
+	</header>
+
+	<div class="login-box">
+    <h2>Dettagli Film</h2>
+    <ul class="user-box" th:if="${movie}">
+        <span th:text="${movie.title}">Up!</span>
+        <span th:text="'(' + ${movie.year} + ')'">2000</span>
+      
+      
+      
+      <ul class="box" style= "height: 300px; overflow-y: scroll;">
+		  <div th:if="${movie.director}">
+			  <h2>Regista:</h2>
+			<span th:text="${movie.director.name}"></span>
+		</div>
+		<div th:unless="${movie.director}"> <h2>Nessun regista per questo film</h2></div>
+		  
+		  
+		  <div th:if="${!movie.actors.isEmpty()}">
+			  <h2>Attori:</h2>
+		<li th:each="actor : ${movie.actors}">
+			<span th:text="${actor.name}"> </span> 
+		</li>
+      	
+	    <h2 th:style="'color:white'" >Immagini: </h2>
+		<li th:each="image : ${movie.photos}">
+			<span> <img width="40%" th:src="@{${movie.photosImagePath} + ${image}}"> </span> 
+		</li>
+      </div>
+      </ul>
+    <div th:unless="${movie}">Non esiste</div>
+    </div>
+  </body>
+</html>

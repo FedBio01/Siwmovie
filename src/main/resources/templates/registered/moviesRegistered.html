@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Film</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+<link rel="stylesheet" href="../lib/w3.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></head>
+
+<body>
+	<header>
+		<div th:if="${#request.userPrincipal}">
+			<span th:text="${#request.userPrincipal.principal.username}"></span>
+			<i class="material-icons">person</i>
+			<a style="color:black" href="/logout">Logout</a>
+		</div>
+		<div th:unless="${#request.userPrincipal}">
+			<a style="color:black" href="/login">Login</a>
+		</div>
+		<div><a style="color:black" href="/"><i class="material-icons">home</i></a></div>
+	</header>
+	
+	<div class="login-box">
+	<h1>Film</h1>
+	<div th:if="${movies==null || movies.isEmpty()}">Non ci sono film nel sistema</div>
+	<ul style= "height: 80%; overflow-y: scroll;">
+		<li th:each="movie : ${movies}">
+			<a th:href="@{'/movie' + '/' + ${movie.id}}"
+				th:text="${movie.title} + ' (' + ${movie.year} + ')'">Up! (2000)</a>
+			<div>
+				
+				<a th:href="@{'/registered/addReview' + '/' + ${movie.id}}">Inserisci recensione</a>
+			<a th:href="@{'/movie/reviews' + '/' + ${movie.id}}"
+				th:text="'Visualizza le recensioni'"></a>
+			</div>
+			
+		</li>
+	</ul>
+	</div>
+</body>
+
+</html>

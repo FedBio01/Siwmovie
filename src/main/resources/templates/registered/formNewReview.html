@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>
+		New Movie
+	</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+<link rel="stylesheet" href="../lib/w3.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></head>
+
+<body>
+	<header>
+		<div th:if="${#request.userPrincipal}">
+			<span th:text="${#request.userPrincipal.principal.username}"></span>
+			<i class="material-icons">person</i>
+			<a style="color:black" href="/logout">Logout</a>
+		</div>
+		<div th:unless="${#request.userPrincipal}">
+			<a style="color:black" href="/login">Login</a>
+		</div>
+		<div><a style="color:black" href="/"><i class="material-icons">home</i></a></div>
+	</header>
+	
+	
+	<div class="login-box">
+	<h2>Aggiungi una recensione al film</h2>
+	<form th:action="@{'/registered/review/' + ${movie.id}}" method="POST" th:object="${review}">
+		<div th:if="${#fields.hasGlobalErrors()}">
+  			<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p> 
+  		</div>
+		<div class="user-box">
+			
+			<input type="text" th:field="${review.title}" required/>
+			<label>Titolo:</label>
+			<span th:if="${#fields.hasErrors('title')}" th:errors="*{title}">
+		    </span>
+		</div>
+		<div class="user-box">
+			<input type="number" th:field="${review.rating}" required/>
+			<label>Valutazione (da 1 a 5):</label> 
+			<span th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}">
+		    </span>
+		</div>
+		<div class="user-box">
+			 <input type="text" th:field="${review.text}" required/>
+			 <label>Testo:</label>
+		</div>
+		
+		<div>
+			<a>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <button type="submit">Conferma</button>
+    </a>
+			</div>
+	</form>
+	</div>
+</body>
+
+</html>
