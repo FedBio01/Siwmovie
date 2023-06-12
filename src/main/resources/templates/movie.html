@@ -34,8 +34,6 @@
 		</div>
 		<div th:unless="${movie.director}"> <h2>Nessun regista per questo film</h2></div>
 		  
-		  
-		  <div th:if="${!movie.actors.isEmpty()}">
 			  <h2>Attori:</h2>
 		<li th:each="actor : ${movie.actors}">
 			<span th:text="${actor.name}"> </span> 
